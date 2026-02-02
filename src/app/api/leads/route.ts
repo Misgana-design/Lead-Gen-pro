@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 
 // Mock Database (Persistent for the duration of the server session)
-let leads: any[] = [];
+const leads: any[] = [];
 
 export async function POST(request: Request) {
   const body = await request.json();
