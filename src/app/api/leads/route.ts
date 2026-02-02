@@ -1,8 +1,15 @@
 // src/app/api/leads/route.ts (Updated)
 import { NextResponse } from "next/server";
 
+export interface LeadRequest {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 // Mock Database (Persistent for the duration of the server session)
-const leads: any[] = [];
+const leads: LeadRequest[] = [];
 
 export async function POST(request: Request) {
   const body = await request.json();
