@@ -1,45 +1,22 @@
-// src/app/api/leads/route.ts
+// src/app/api/leads/route.ts (Updated)
 import { NextResponse } from "next/server";
 
-// 1. Define clean TypeScript types for the lead
-export interface LeadRequest {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
-
-// 2. Mock Database (In-memory for MVP)
-// Portfolio Note: In a real production app, we would use Prisma + PostgreSQL here.
-let leads: LeadRequest[] = [];
+// Mock Database (Persistent for the duration of the server session)
+let leads: any[] = [];
 
 export async function POST(request: Request) {
-  try {
-    const body: LeadRequest = await request.json();
+  const body = await request.json();
+  const newLead = {
+    ...body,
+    id: Date.now(),
+    date: new Date().toLocaleDateString(),
+    status: "New",
+  };
+  leads.push(newLead);
+  return NextResponse.json({ message: "Success" }, { status: 201 });
+}
 
-    // 3. Simple Validation
-    if (!body.name || !body.email || !body.message) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 },
-      );
-    }
-
-    // 4. Save the lead
-    leads.push(body);
-
-    // Portfolio Pitch: "I've structured this to easily swap the in-memory array
-    // for a real database like Supabase or MongoDB when scaling."
-    console.log("New Lead Captured:", body);
-
-    return NextResponse.json(
-      { message: "Lead captured successfully!" },
-      { status: 201 },
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
-  }
+export async function GET() {
+  // In production, you would check a "secret" header here for basic protection
+  return NextResponse.json(leads);
 }
