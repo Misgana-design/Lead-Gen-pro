@@ -14,7 +14,7 @@ export const Input = ({ label, textarea, ...props }: InputProps) => {
     <div className="flex flex-col gap-1.5 w-full">
       <label className="text-sm font-semibold text-slate-700">{label}</label>
       {textarea ? (
-        <textarea className={styles} rows={4} {...(props as any)} />
+        <textarea className={styles} rows={4} {...(props)} />
       ) : (
         <input className={styles} {...props} />
       )}
