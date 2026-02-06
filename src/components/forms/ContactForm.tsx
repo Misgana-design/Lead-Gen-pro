@@ -17,7 +17,7 @@ export default function ContactForm() {
     message: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent<Element>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
 
