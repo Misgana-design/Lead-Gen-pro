@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { LeadRequest } from "@/app/api/leads/route";
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [leads, setLeads] = useState([]);
+  const [leads, setLeads] = useState<LeadRequest[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // For this project, the password is "leadgen2026"
@@ -81,7 +82,7 @@ export default function AdminDashboard() {
                   </td>
                 </tr>
               ) : (
-                leads.map((lead: any) => (
+                leads.map((lead) => (
                   <tr
                     key={lead.id}
                     className="border-b hover:bg-slate-50 transition-colors"
