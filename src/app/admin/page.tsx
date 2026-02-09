@@ -8,7 +8,7 @@ import { LeadRequest } from "@/app/api/leads/route";
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
-  const [leads, setLeads] = useState<LeadRequest[]>([]);
+  const [leads, setLeads] = useState<LeadRequest[] | undefined>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // For this project, the password is "leadgen2026"
@@ -75,14 +75,14 @@ export default function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {leads.length === 0 ? (
+              {leads?.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="p-10 text-center text-slate-500">
                     No leads captured yet.
                   </td>
                 </tr>
               ) : (
-                leads.map((lead) => (
+                leads?.map((lead) => (
                   <tr
                     key={lead.id}
                     className="border-b hover:bg-slate-50 transition-colors"
