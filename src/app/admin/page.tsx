@@ -124,7 +124,7 @@ export default function AdminDashboard() {
                 {leads?.map(
                   (lead) =>
                     lead.status === "New" && (
-                      <th className="p-4 font-semibold"></th>
+                      <th key={lead?.id} className="p-4 font-semibold"></th>
                     ),
                 )}
               </tr>
