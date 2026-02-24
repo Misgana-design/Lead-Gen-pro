@@ -32,7 +32,7 @@ export default function ContactForm() {
 
       setStatus("success");
       setFormData({ name: "", email: "", phone: "", message: "" }); // Reset form
-    } catch (err) {
+    } catch (error) {
       setStatus("error");
     }
   };
