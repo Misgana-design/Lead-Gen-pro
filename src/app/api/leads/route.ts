@@ -1,6 +1,5 @@
 // src/app/api/leads/route.ts (Updated)
 import { supabase } from "@/lib/supabase";
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 export interface LeadRequest {
@@ -18,6 +17,7 @@ export interface LeadRequest {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+
     const { error } = await supabase.from("leads").insert([
       {
         name: body.name,
@@ -26,6 +26,7 @@ export async function POST(request: Request) {
         message: body.message,
       },
     ]);
+
     if (error) throw error;
     return NextResponse.json({ message: "Success" }, { status: 201 });
   } catch (error) {
@@ -81,7 +82,7 @@ export async function GET() {
       .from("leads")
       .select("*")
       .order("created_at", { ascending: false });
-    if (error) throw new Error();
+    if (error) throw error;
     // In production, you would check a "secret" header here for basic protection
     return NextResponse.json(data);
   } catch (error) {
