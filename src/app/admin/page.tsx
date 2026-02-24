@@ -1,26 +1,14 @@
 "use client";
-
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { LeadRequest } from "@/app/api/leads/route";
 
 export default function AdminDashboard() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState("");
   const [leads, setLeads] = useState<LeadRequest[] | undefined>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  // For this project, the password is "leadgen2026"
-  const handleLogin = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (password === "leadgen2026") {
-      setIsAuthenticated(true);
-      fetchLeads();
-    } else {
-      alert("Incorrect Password");
-    }
-  };
+  const router = useRouter();
 
   const fetchLeads = async () => {
     setIsLoading(true);
@@ -30,10 +18,14 @@ export default function AdminDashboard() {
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
   const handleLogout = () => {
-    setIsAuthenticated(false);
-    setPassword("");
-    setLeads([]);
+    document.cookie =
+      "admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    router.push("/login");
   };
 
   const updateStatus = async (id: number | undefined, status: string) => {
@@ -59,7 +51,7 @@ export default function AdminDashboard() {
   const deleteLeads = async (id: number | undefined) => {
     try {
       const res = await fetch(`api/leads?id=${id}`, { method: "DELETE" });
-      if (!confirm("Are you sure you want to delete")) return;
+      // if (!confirm("Are you sure you want to delete")) return;
       if (res.ok) {
         setLeads(leads?.filter((lead) => lead.id !== id));
       }
@@ -68,30 +60,6 @@ export default function AdminDashboard() {
       alert("Delete failed");
     }
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="animate-fade-in">
-        <Section className="min-h-screen flex items-center justify-center">
-          <form
-            onSubmit={handleLogin}
-            className="max-w-md w-full p-8 border rounded-xl bg-white shadow-lg"
-          >
-            <h1 className="text-2xl font-bold mb-6">Admin Access</h1>
-            <input
-              type="password"
-              required
-              placeholder="Enter Admin Password"
-              className="w-full p-3 border rounded mb-4 outline-none focus:ring-2 focus:ring-blue-600"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button className="w-full hover:cursor-pointer">Login</Button>
-          </form>
-        </Section>
-      </div>
-    );
-  }
 
   return (
     <div className="animate-fade-in">
