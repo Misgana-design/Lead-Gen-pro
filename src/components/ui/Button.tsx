@@ -7,7 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = ({
-  variant = "primary",
+  variant = "primary", //default value
   children,
   ...props
 }: ButtonProps) => {
@@ -15,9 +15,9 @@ export const Button = ({
     "px-6 py-3 rounded-md font-semibold transition-all duration-200 text-center";
   const variants = {
     primary:
-      "bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-blue-500/30",
+      "bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-blue-500/30 hover:cursor-pointer",
     secondary:
-      "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50",
+      "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 hover:cursor-pointer",
   };
 
   return (
