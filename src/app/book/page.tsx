@@ -20,7 +20,7 @@ export default function BookingPage() {
         <Section>
           {/* Placeholder for Calendly Embed */}
           <div
-            className="w-full min-h-[600px] border border-slate-200 rounded-2xl overflow-hidden shadow-sm"
+            className="w-full min-h-150 border border-slate-200 rounded-2xl overflow-hidden shadow-sm"
             style={{ position: "relative" }}
           >
             {/* Replace 'YOUR_CALENDLY_LINK' with a real one later */}
@@ -28,7 +28,6 @@ export default function BookingPage() {
               src="https://calendly.com/YOUR_CALENDLY_LINK?hide_event_type_details=1&hide_gdpr_banner=1"
               width="100%"
               height="100%"
-              frameBorder="0"
             ></iframe>
           </div>
         </Section>
